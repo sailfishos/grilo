@@ -3,7 +3,7 @@ Summary:    Framework for discovering and browsing media
 Version:    0.2.6
 Release:    1
 Group:      Development/Libraries
-License:    LGPL 2.1
+License:    LGPLv2.1
 URL:        https://live.gnome.org/Grilo
 Source0:    http://ftp.gnome.org/pub/GNOME/sources/grilo/0.2/%{name}-%{version}.tar.xz
 Patch0:     disable-gtkdoc.patch
@@ -29,14 +29,12 @@ More precisely, Grilo provides:
 
 %package devel
 Summary:    Development files for %{name}
-Group:      Development/Libraries
 Requires:   %{name} = %{version}-%{release}
 %description devel
 Development files for %{name}
 
 %package -n grilo-tools
 Summary:    Tools for grilo
-Group:      Development/Libraries
 Requires:   %{name} = %{version}-%{release}
 %description -n grilo-tools
 Tools for grilo
