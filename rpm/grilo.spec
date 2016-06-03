@@ -1,6 +1,6 @@
 Name:       libgrilo
 Summary:    Framework for discovering and browsing media
-Version:    0.2.6
+Version:    0.2.15
 Release:    1
 Group:      Development/Libraries
 License:    LGPLv2.1
@@ -10,6 +10,7 @@ Patch0:     disable-gtkdoc.patch
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(libsoup-2.4)
+BuildRequires:  pkgconfig(totem-plparser)
 BuildRequires:  intltool
 BuildRequires:  gnome-common
 
