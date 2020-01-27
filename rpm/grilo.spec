@@ -2,11 +2,11 @@ Name:       libgrilo
 Summary:    Framework for discovering and browsing media
 Version:    0.2.15
 Release:    1
-Group:      Development/Libraries
 License:    LGPLv2.1
 URL:        https://live.gnome.org/Grilo
 Source0:    http://ftp.gnome.org/pub/GNOME/sources/grilo/0.2/%{name}-%{version}.tar.xz
 Patch0:     disable-gtkdoc.patch
+Patch1:     0001-core-include-filename-in-file-production.patch
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(libsoup-2.4)
@@ -41,8 +41,7 @@ Requires:   %{name} = %{version}-%{release}
 Tools for grilo
 
 %prep
-%setup -q -n %{name}-%{version}/grilo
-%patch0 -p1
+%autosetup -p1 -n %{name}-%{version}/grilo
 
 %build
 echo "EXTRA_DIST = missing-gtk-doc" > gtk-doc.make
@@ -60,6 +59,7 @@ rm -rf %{buildroot}
 
 %files -f grilo.lang
 %defattr(-,root,root,-)
+%license COPYING
 %{_libdir}/*.so.*
 
 %files devel
