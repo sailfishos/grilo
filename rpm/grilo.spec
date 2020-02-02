@@ -2,7 +2,7 @@ Name:       libgrilo
 Summary:    Framework for discovering and browsing media
 Version:    0.2.15
 Release:    1
-License:    LGPLv2.1
+License:    LGPLv2
 URL:        https://live.gnome.org/Grilo
 Source0:    http://ftp.gnome.org/pub/GNOME/sources/grilo/0.2/%{name}-%{version}.tar.xz
 Patch0:     disable-gtkdoc.patch
