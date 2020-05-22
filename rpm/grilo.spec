@@ -1,18 +1,23 @@
 Name:       libgrilo
 Summary:    Framework for discovering and browsing media
-Version:    0.2.15
+Version:    0.3.12
 Release:    1
 License:    LGPLv2
 URL:        https://live.gnome.org/Grilo
-Source0:    http://ftp.gnome.org/pub/GNOME/sources/grilo/0.2/%{name}-%{version}.tar.xz
-Patch0:     disable-gtkdoc.patch
-Patch1:     0001-core-include-filename-in-file-production.patch
+Source0:    http://ftp.gnome.org/pub/GNOME/sources/grilo/0.3/%{name}-%{version}.tar.xz
+BuildRequires:  pkgconfig(gio-2.0)
 BuildRequires:  pkgconfig(glib-2.0)
+BuildRequires:  pkgconfig(gmodule-2.0)
+BuildRequires:  pkgconfig(gobject-introspection-1.0)
 BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(libsoup-2.4)
 BuildRequires:  pkgconfig(totem-plparser)
+BuildRequires:  pkgconfig(python)
 BuildRequires:  intltool
 BuildRequires:  gnome-common
+BuildRequires:  meson
+BuildRequires:  ninja
+BuildRequires:  vala-devel
 
 %description
 Grilo is a framework focused on making media discovery and browsing
@@ -44,29 +49,27 @@ Tools for grilo
 %autosetup -p1 -n %{name}-%{version}/grilo
 
 %build
-echo "EXTRA_DIST = missing-gtk-doc" > gtk-doc.make
-PKG_NAME="grilo" REQUIRED_AUTOMAKE_VERSION=1.10 USE_GNOME2_MACROS=1 USE_COMMON_DOC_BUILD=no \
-NOCONFIGURE=1 gnome-autogen.sh
-%configure --disable-static --enable-grl-net --enable-introspection=no
-
-#make %{?jobs:-j%jobs}
-make V=1
+%meson -Denable-introspection=false -Denable-gtk-doc=false -Denable-test-ui=false
 
 %install
 rm -rf %{buildroot}
-%make_install
+%meson_install
 %find_lang grilo --with-gnome
 
 %files -f grilo.lang
 %defattr(-,root,root,-)
 %license COPYING
 %{_libdir}/*.so.*
+%{_datadir}/vala/vapi/grilo*.deps
+%{_datadir}/vala/vapi/grilo*.vapi
 
 %files devel
 %defattr(-,root,root,-)
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*
 %{_includedir}/*
+%{_libdir}/girepository-1.0/*.typelib
+%{_datadir}/gir-1.0/*.gir
 
 %files -n grilo-tools
 %defattr(-,root,root,-)
