@@ -16,6 +16,7 @@ BuildRequires:  python3-base
 BuildRequires:  meson
 BuildRequires:  ninja
 BuildRequires:  vala-devel
+BuildRequires:  gettext
 
 %description
 Grilo is a framework focused on making media discovery and browsing
