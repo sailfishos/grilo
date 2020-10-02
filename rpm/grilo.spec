@@ -1,22 +1,23 @@
-Name:       libgrilo
-Summary:    Framework for discovering and browsing media
-Version:    0.3.12
+Name:       grilo
+Summary:    Content discovery framework
+Version:    0.3.13
 Release:    1
-License:    LGPLv2
-URL:        https://live.gnome.org/Grilo
-Source0:    http://ftp.gnome.org/pub/GNOME/sources/grilo/0.3/%{name}-%{version}.tar.xz
-BuildRequires:  pkgconfig(gio-2.0)
-BuildRequires:  pkgconfig(glib-2.0)
-BuildRequires:  pkgconfig(gmodule-2.0)
-BuildRequires:  pkgconfig(gobject-introspection-1.0)
-BuildRequires:  pkgconfig(libxml-2.0)
-BuildRequires:  pkgconfig(libsoup-2.4)
-BuildRequires:  pkgconfig(totem-plparser)
-BuildRequires:  python3-base
-BuildRequires:  meson
-BuildRequires:  ninja
-BuildRequires:  vala-devel
+License:    LGPLv2+
+URL:        https://wiki.gnome.org/Projects/Grilo
+Source0:    %{name}-%{version}.tar.bz2
+BuildRequires:  meson >= 0.46.0
+BuildRequires:  vala-devel >= 0.27.1
 BuildRequires:  gettext
+BuildRequires:  python3-base
+BuildRequires:  pkgconfig(gio-2.0) >= 2.58
+BuildRequires:  pkgconfig(glib-2.0) >= 2.58
+BuildRequires:  pkgconfig(gmodule-2.0) >= 2.58
+BuildRequires:  pkgconfig(gobject-2.0) >= 2.58
+BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 0.9.0
+BuildRequires:  pkgconfig(libxml-2.0)
+BuildRequires:  pkgconfig(libsoup-2.4) >= 2.41.3
+BuildRequires:  pkgconfig(totem-plparser) >= 3.4.1
+Obsoletes:      libgrilo
 
 %description
 Grilo is a framework focused on making media discovery and browsing
@@ -33,48 +34,51 @@ More precisely, Grilo provides:
 
 
 %package devel
-Summary:    Development files for %{name}
+Summary:    Libraries/include files for Grilo framework
 Requires:   %{name} = %{version}-%{release}
-%description devel
-Development files for %{name}
 
-%package -n grilo-tools
-Summary:    Tools for grilo
+%description devel
+Development files for %{name}.
+
+%package tools
+Summary:    Tools for Grilo framework
 Requires:   %{name} = %{version}-%{release}
-%description -n grilo-tools
-Tools for grilo
+
+%description tools
+Tools for %{name}.
 
 %prep
 %autosetup -p1 -n %{name}-%{version}/grilo
 
 %build
-%meson -Denable-introspection=false -Denable-gtk-doc=false -Denable-test-ui=false
+%meson -Denable-gtk-doc=false -Denable-test-ui=false
+%meson_build
 
 %install
-rm -rf %{buildroot}
 %meson_install
 %find_lang grilo --with-gnome
+
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
 
 %files -f grilo.lang
 %defattr(-,root,root,-)
 %license COPYING
 %{_libdir}/*.so.*
-%{_datadir}/vala/vapi/grilo*.deps
-%{_datadir}/vala/vapi/grilo*.vapi
 
 %files devel
 %defattr(-,root,root,-)
+%doc AUTHORS NEWS README.md TODO
 %{_libdir}/*.so
-%{_libdir}/pkgconfig/*
+%{_libdir}/pkgconfig/*.pc
 %{_includedir}/*
 %{_libdir}/girepository-1.0/*.typelib
 %{_datadir}/gir-1.0/*.gir
+%{_datadir}/vala/vapi/grilo*.deps
+%{_datadir}/vala/vapi/grilo*.vapi
 
-%files -n grilo-tools
+%files tools
 %defattr(-,root,root,-)
 %{_bindir}/*
-%{_mandir}/*/*
-
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
+%{_mandir}/man1/*
