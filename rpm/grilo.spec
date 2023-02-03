@@ -1,6 +1,6 @@
 Name:       grilo
 Summary:    Content discovery framework
-Version:    0.3.14
+Version:    0.3.15
 Release:    1
 License:    LGPLv2+
 URL:        https://wiki.gnome.org/Projects/Grilo
@@ -51,7 +51,7 @@ Tools for %{name}.
 %autosetup -p1 -n %{name}-%{version}/grilo
 
 %build
-%meson -Denable-gtk-doc=false -Denable-test-ui=false
+%meson -Denable-gtk-doc=false -Denable-test-ui=false -Dsoup3=false
 %meson_build
 
 %install
