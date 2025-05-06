@@ -1,6 +1,6 @@
 Name:       grilo
 Summary:    Content discovery framework
-Version:    0.3.15
+Version:    0.3.16
 Release:    1
 License:    LGPLv2+
 URL:        https://wiki.gnome.org/Projects/Grilo
@@ -15,9 +15,8 @@ BuildRequires:  pkgconfig(gmodule-2.0) >= 2.58
 BuildRequires:  pkgconfig(gobject-2.0) >= 2.58
 BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 0.9.0
 BuildRequires:  pkgconfig(libxml-2.0)
-BuildRequires:  pkgconfig(libsoup-2.4) >= 2.41.3
+BuildRequires:  pkgconfig(libsoup-3.0)
 BuildRequires:  pkgconfig(totem-plparser) >= 3.4.1
-Obsoletes:      libgrilo
 
 %description
 Grilo is a framework focused on making media discovery and browsing
@@ -51,7 +50,7 @@ Tools for %{name}.
 %autosetup -p1 -n %{name}-%{version}/grilo
 
 %build
-%meson -Denable-gtk-doc=false -Denable-test-ui=false -Dsoup3=false
+%meson -Denable-gtk-doc=false -Denable-test-ui=false -Dsoup3=true
 %meson_build
 
 %install
@@ -63,12 +62,10 @@ Tools for %{name}.
 %postun -p /sbin/ldconfig
 
 %files -f grilo.lang
-%defattr(-,root,root,-)
 %license COPYING
 %{_libdir}/*.so.*
 
 %files devel
-%defattr(-,root,root,-)
 %doc AUTHORS NEWS README.md TODO
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
@@ -79,6 +76,5 @@ Tools for %{name}.
 %{_datadir}/vala/vapi/grilo*.vapi
 
 %files tools
-%defattr(-,root,root,-)
 %{_bindir}/*
 %{_mandir}/man1/*
